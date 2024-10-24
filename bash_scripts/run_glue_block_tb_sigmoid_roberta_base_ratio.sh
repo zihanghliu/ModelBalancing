@@ -7,7 +7,7 @@ source activate base
 conda activate ww_finetune
 
 
-SRC_DIR=$(pwd)/transformers
+SRC_DIR=$(pwd)
 CKPT_SRC_DIR=$(pwd)/checkpoints/nlp
 MODEL_NAME=FacebookAI/roberta-base
 warmup=0.06
@@ -24,7 +24,7 @@ remove_last_layer=True
 
 for SLURM_ARRAY_TASK_ID in {3..20..1}
     do
-        cfg=$(sed -n "$SLURM_ARRAY_TASK_ID"p $(pwd)/config_files/configs_sigmoid.txt)
+        cfg=$(sed -n "$SLURM_ARRAY_TASK_ID"p ${SRC_DIR}/config_files/configs_sigmoid.txt)
         TASK_NAME=$(echo $cfg | cut -f 1 -d ' ')
         LR=$(echo $cfg | cut -f 2 -d ' ')
         batch_size=$(echo $cfg | cut -f 3 -d ' ')
@@ -45,7 +45,7 @@ for SLURM_ARRAY_TASK_ID in {3..20..1}
 
         mkdir -p $OUTPUT_DIR/metrics_stats
 
-        cd $SRC_DIR/examples/pytorch/text-classification
+        cd $SRC_DIR/transformers/examples/pytorch/text-classification
 
         python run_glue.py \
             --model_name_or_path $MODEL_NAME \

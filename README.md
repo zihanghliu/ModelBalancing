@@ -28,7 +28,7 @@ pip install -r requirements.txt
 conda activate ww_finetune
 cd transformers
 pip install -e .
-pip install accelerate -U
+pip install accelerate==0.28.0
 ```
 
 ### Reproducing the Results on QNLI Dataset
